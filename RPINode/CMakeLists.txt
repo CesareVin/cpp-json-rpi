@@ -13,13 +13,22 @@ set(SOURCE_FILES
     src/Server.cpp
     src/Server.h)
 
+set(CPPREST_INCLUDE
+    /opt/cpprestsdk/Release/include)
+set(CPLCORE_INCLUDE
+    /home/cesare/Project/jarvis/CPLCore/src)
+set(CPPREST_LIB_PATH
+    /opt/cpprestsdk/Release/build.debug/Binaries)
+set(CPLCORE_LIB_PATH
+    /home/cesare/Desktop)
+
 include_directories(.)
 include_directories(src)
-include_directories(/opt/cpprestsdk/Release/include)
-include_directories(/home/cesare/Project/jarvis/CPLCore/src)
+include_directories(${CPPREST_INCLUDE})
+include_directories(${CPLCORE_INCLUDE})
 
-link_directories(/opt/cpprestsdk/Release/build.debug/Binaries)
-link_directories(/home/cesare/Desktop)
+link_directories(${CPPREST_LIB_PATH})
+link_directories(${CPLCORE_LIB_PATH})
 
 add_executable(RPINode ${SOURCE_FILES})
 
