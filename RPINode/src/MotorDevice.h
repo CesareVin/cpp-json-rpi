@@ -9,10 +9,11 @@
 #define MOTORDEVICE_H_
 
 #include <IDevice.h>
+#include <string>
 
 class MotorDevice: public IDevice {
 public:
-	MotorDevice();
+	MotorDevice(string name);
 	virtual ~MotorDevice();
 };
 

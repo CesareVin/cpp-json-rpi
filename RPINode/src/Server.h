@@ -9,6 +9,7 @@
 #define SERVER_H_
 
 #include "common.h"
+#include "NodeBase.h"
 
 using namespace std;
 using namespace web;
@@ -19,7 +20,7 @@ using namespace web::http::experimental::listener;
 class Server {
 public:
 	Server();
-	Server(utility::string_t url);
+	Server(utility::string_t url,NodeBase*node);
 	virtual ~Server();
 
 	 pplx::task<void> open();// { /*return m_listener.open();*/ }
@@ -32,6 +33,7 @@ private:
 	void handle_delete(http_request message);
 
 	http_listener m_listener;
+	NodeBase* m_Node;
 
 };
 
