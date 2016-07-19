@@ -12,6 +12,31 @@
 #include<vector>
 #include<map>
 
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <sstream>
+#include <iostream>
+#include <fstream>
+#include <random>
+
+#ifdef _WIN32
+#define NOMINMAX
+#include <Windows.h>
+#else
+# include <sys/time.h>
+#endif
+#include "cpprest/json.h"
+#include "cpprest/http_listener.h"
+#include "cpprest/uri.h"
+#include "cpprest/asyncrt_utils.h"
+
+using namespace std;
+using namespace web;
+using namespace utility;
+using namespace http;
+using namespace web::http::experimental::listener;
+
 using namespace std;
 
 typedef std::map<std::string, std::string> TCommandSchema;
@@ -50,6 +75,27 @@ public:
 	{
 		return m_requestSchema;
 	}
+
+	virtual web::json::value AsJSON()
+	{
+		web::json::value res = web::json::value::object();
+		res[U("name")] = web::json::value::string(m_name);
+
+		web::json::value jSchema = web::json::value::array(m_requestSchema.size());
+
+		int idx = 0;
+		for (auto iter = m_requestSchema.begin(); iter != m_requestSchema.end(); ++iter)
+		{
+			web::json::value jSchemaEntity = web::json::value::object();
+		 	jSchemaEntity[U(iter->first)] = web::json::value::string(iter->second);
+			jSchema[idx++] = jSchemaEntity;
+			//jCards[idx++] = iter->AsJSON();
+		}
+		res["RequestSchema"] = jSchema;
+		return res;
+	}
+
+	//res[CARDS] = jCards
 
 protected:
 
