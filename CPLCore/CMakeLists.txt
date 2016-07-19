@@ -11,4 +11,11 @@ set(SOURCE_FILES
     src/NodeBase.cpp
     src/NodeBase.h)
 
+set(CPPREST_INCLUDE /opt/cpprestsdk/Release/include)
+set(CPPREST_LIB_PATH /opt/cpprestsdk/Release/build.debug/Binaries)
+include_directories(${CPPREST_INCLUDE})
+link_directories(${CPPREST_LIB_PATH})
+
 add_library(CPLCore ${SOURCE_FILES})
+
+target_link_libraries(CPLCore boost_system crypto ssl cpprest)
