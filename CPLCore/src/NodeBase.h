@@ -10,25 +10,25 @@
 
 #include<string>
 #include<vector>
-#include "IDevice.h"
+#include "DeviceBase.h"
 
 using namespace std;
 
 class NodeBase
 {
 public:
-	NodeBase();
-	NodeBase(vector<IDevice*> devices);
+	explicit NodeBase();
+	explicit NodeBase(vector<DeviceBase*> devices);
 	~NodeBase();
 	string getName();
 	void setName(string name);
-	vector<IDevice*> getDevices();
-	void addDevice(IDevice* device);
-	IDevice* removeDevice(int id);
+	vector<DeviceBase*> getDevices();
+	void addDevice(DeviceBase* device);
+	DeviceBase* removeDevice(int id);
 
 private:
 	string m_name;
-	vector<IDevice*> m_Devices;
+	vector<DeviceBase*> m_Devices;
 };
 
 
