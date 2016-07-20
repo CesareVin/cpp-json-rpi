@@ -9,9 +9,7 @@ set(SOURCE_FILES
     src/MotorDevice.cpp
     src/MotorDevice.h
     src/RPINode.cpp
-    src/RPINode.h
-    src/Server.cpp
-    src/Server.h)
+    src/RPINode.h)
 
 set(CPPREST_INCLUDE
     /opt/cpprestsdk/Release/include)
