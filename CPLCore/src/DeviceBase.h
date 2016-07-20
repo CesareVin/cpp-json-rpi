@@ -10,20 +10,27 @@
 
 #include <string>
 #include <vector>
-#include "ICommand.h"
+#include "BaseCommand.h"
 
 using namespace std;
 
-class IDevice
+class DeviceBase
 {
 public:
-	IDevice(){};
-	IDevice(string name,vector<ICommand*> commands)
+	explicit DeviceBase(){};
+	explicit DeviceBase(string name,vector<BaseCommand*> commands)
 	{
 		m_name = name;
 		m_Commands = commands;
 	}
-	virtual ~IDevice(){};
+	virtual ~DeviceBase(){
+
+		while (!this->m_Commands.empty()){
+			BaseCommand* command =m_Commands.back();
+			m_Commands.pop_back();
+			delete(command);
+		}
+	};
 
 	string getName()
 	{
@@ -33,18 +40,18 @@ public:
 	{
 		this->m_name = name;
 	}
-	vector<ICommand*> getCommands()
+	vector<BaseCommand*> getCommands()
 	{
 		return m_Commands;
 	}
-	void addCommand(ICommand* command)
+	void addCommand(BaseCommand* command)
 	{
 		m_Commands.push_back(command);
 	}
 
 protected:
 	string m_name;
-	vector<ICommand*> m_Commands;
+	vector<BaseCommand*> m_Commands;
 };
 
 
