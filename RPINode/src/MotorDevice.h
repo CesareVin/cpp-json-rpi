@@ -8,13 +8,17 @@
 #ifndef MOTORDEVICE_H_
 #define MOTORDEVICE_H_
 
-#include <IDevice.h>
+#include <DeviceBase.h>
 #include <string>
+#include "BaseCommand.h"
 
-class MotorDevice: public IDevice {
+class MotorDevice: public DeviceBase {
 public:
 	MotorDevice(string name);
 	virtual ~MotorDevice();
+
+private:
+	BaseCommand* motorOn;
 };
 
 #endif /* MOTORDEVICE_H_ */

@@ -9,11 +9,16 @@
 #define RPINODE_H_
 
 #include "NodeBase.h"
+#include "MotorDevice.h"
 
 class RPINode : public NodeBase {
 public:
 	RPINode();
 	virtual ~RPINode();
+
+private:
+	MotorDevice* m_leftMotor;
+	MotorDevice* m_rightMotor;
 };
 
 #endif /* RPINODE_H_ */

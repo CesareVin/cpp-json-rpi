@@ -8,15 +8,12 @@
 #include "RPINode.h"
 #include "MotorDevice.h"
 
-MotorDevice* leftMotor;
-MotorDevice* rightMotor;
-
-RPINode::RPINode() {
+RPINode::RPINode():NodeBase() {
     this->setName("RpiNode");
-    leftMotor = new MotorDevice("LeftMotor");
-    rightMotor = new MotorDevice("RIghtMotor");
-    this->addDevice(leftMotor);
-    this->addDevice(rightMotor);
+    m_leftMotor = new MotorDevice("LeftMotor");
+    m_rightMotor = new MotorDevice("RIghtMotor");
+    this->addDevice(m_leftMotor);
+    this->addDevice(m_rightMotor);
 }
 
 RPINode::~RPINode() {
