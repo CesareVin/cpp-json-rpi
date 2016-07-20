@@ -6,10 +6,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES
     src/BaseCommand.cpp
     src/BaseCommand.h
-    src/ICommand.h
-    src/IDevice.h
+    src/DeviceBase.h
     src/NodeBase.cpp
-    src/NodeBase.h)
+    src/NodeBase.h
+    src/Server.cpp
+    src/Server.h)
 
 set(CPPREST_INCLUDE /opt/cpprestsdk/Release/include)
 set(CPPREST_LIB_PATH /opt/cpprestsdk/Release/build.debug/Binaries)
