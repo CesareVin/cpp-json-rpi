@@ -40,17 +40,18 @@ typedef std::pair<string,string> TCommandParameter;
 class BaseCommand
 {
 public:
+	explicit BaseCommand();
 	explicit BaseCommand(string name,string device,map<string,string> schema);
 	virtual ~BaseCommand();
 
-	virtual string getName();
-	virtual void setName(string name);
+	string getName();
+	void setName(string name);
 
-	virtual string getDevice();
-	virtual void setDevice(string device);
+	string getDevice();
+	void setDevice(string device);
 
-	virtual void setRequestSchema(TCommandSchema schema);
-	virtual map<string,string> getRequestSchema();
+	void setRequestSchema(TCommandSchema schema);
+	map<string,string> getRequestSchema();
 
 	virtual web::json::value AsJSON();
 
