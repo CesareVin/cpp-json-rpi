@@ -1,6 +1,5 @@
-#include "BaseCommand.h"
-#include "ICommand.h"
 #include "gtest/gtest.h"
+#include "BaseCommand.h"
 
 
 class BaseCommandSuite : public ::testing::Test {
