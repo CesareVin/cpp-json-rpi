@@ -16,8 +16,8 @@ NodeBase::~NodeBase()
 	/*for (auto &dev : this->m_Devices)	{ }*/
 	while (!this->m_Devices.empty()){
 	    DeviceBase* dev =this->m_Devices.back();
-	    delete(dev);
-	    m_Devices.pop_back();
+		m_Devices.pop_back();
+		delete(dev);
 	}
 }
 

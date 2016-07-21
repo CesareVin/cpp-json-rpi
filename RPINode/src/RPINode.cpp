@@ -6,7 +6,6 @@
  */
 
 #include "RPINode.h"
-#include "MotorDevice.h"
 
 RPINode::RPINode():NodeBase() {
     this->setName("RpiNode");
