@@ -18,6 +18,23 @@ MotorDevice::MotorDevice(string name):DeviceBase() {
 	this->OpenGpio();
 }
 
+MotorDevice::MotorDevice(string name,string pinA,string nameA,string pinB,string nameB):DeviceBase() {
+
+	m_name = name;
+	TCommandSchema schema;
+	schema.insert(TCommandSchemaPair("direction","string"));
+	motorOn = new BaseCommand("motorGo",this->m_name,schema);
+
+	m_motorPinA = pinA;
+	m_motorNameA = nameA;
+
+	m_motorPinB = pinB;
+	m_motorNameB = nameB;
+
+	this->addCommand(motorOn);
+	this->OpenGpio();
+}
+
 MotorDevice::~MotorDevice() {
 	CloseGpio();
 }
@@ -31,33 +48,17 @@ bool MotorDevice::OpenGpio()
 
 	if(exportFile.is_open())
 	{
-		exportFile<<MOTOR_L_A_PIN;
-		exportFile<<MOTOR_L_B_PIN;
-		exportFile<<MOTOR_R_A_PIN;
-		exportFile<<MOTOR_R_B_PIN;
-
-		directionPath <<"/sys/class/gpio/"<<MOTOR_L_A_NAME<<"/direction";
+		exportFile<<m_motorPinA;
+		exportFile<<m_motorPinB;
+	
+		directionPath <<"/sys/class/gpio/"<<m_motorNameA<<"/direction";
 		directionFile.open(directionPath.str());
 		if(!directionFile.is_open())
 			return false;
 		directionFile << "out";
 		directionFile.close();
 
-		directionPath <<"/sys/class/gpio/"<<MOTOR_L_B_NAME<<"/direction";
-		directionFile.open(directionPath.str());
-		if(!directionFile.is_open())
-			return false;
-		directionFile << "out";
-		directionFile.close();
-
-		directionPath <<"/sys/class/gpio/"<<MOTOR_R_A_NAME<<"/direction";
-		directionFile.open(directionPath.str());
-		if(!directionFile.is_open())
-			return false;
-		directionFile << "out";
-		directionFile.close();
-
-		directionPath <<"/sys/class/gpio/"<<MOTOR_R_B_NAME<<"/direction";
+		directionPath <<"/sys/class/gpio/"<<m_motorNameB<<"/direction";
 		directionFile.open(directionPath.str());
 		if(!directionFile.is_open())
 			return false;
@@ -79,10 +80,8 @@ bool MotorDevice::CloseGpio()
 
 	if(unExportFile.is_open())
 	{
-		unExportFile<<MOTOR_L_A_PIN;
-		unExportFile<<MOTOR_L_B_PIN;
-		unExportFile<<MOTOR_R_A_PIN;
-		unExportFile<<MOTOR_R_B_PIN;
+		unExportFile<<m_motorPinA;
+		unExportFile<<m_motorPinB;
 		return true;
 	}
 	return false;
@@ -92,7 +91,7 @@ bool MotorDevice::GoOn()
 {
 	ofstream valueFile;
 	std::ostringstream valueFilePath;
-	valueFilePath<<"sys/class/gpio/"<< MOTOR_R_B_NAME<< "/value";
+	valueFilePath<<"sys/class/gpio/"<< m_motorNameA<< "/value";
 	valueFile.open(valueFilePath.str());
 	if(valueFile.is_open())
 	{

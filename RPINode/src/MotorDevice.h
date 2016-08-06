@@ -12,19 +12,11 @@
 #include <string>
 #include "BaseCommand.h"
 
-#define MOTOR_L_A_PIN	"53"
-#define MOTOR_L_A_NAME	"pioB21"
-#define MOTOR_L_B_PIN	"55"
-#define MOTOR_L_B_NAME	"pioB23"
-#define MOTOR_R_A_PIN	"59"
-#define MOTOR_R_A_NAME	"pioB27"
-#define MOTOR_R_B_PIN	"47"
-#define MOTOR_R_B_NAME	"pioB15"
-
 
 class MotorDevice: public DeviceBase {
 public:
 	MotorDevice(string name);
+	MotorDevice(string name,string pinA,string nameA,string pinB,string nameB);
 	virtual ~MotorDevice();
 
 	bool GoOn();
@@ -37,6 +29,12 @@ private:
 	bool OpenGpio();
 	bool CloseGpio();
 	BaseCommand* motorOn;
+
+	string m_motorPinA;
+	string m_motorNameA;
+
+	string m_motorPinB;
+	string m_motorNameB;
 };
 
 #endif /* MOTORDEVICE_H_ */
