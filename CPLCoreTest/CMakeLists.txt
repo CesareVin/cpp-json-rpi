@@ -8,19 +8,18 @@ set(SOURCE_FILES
     src/BaseCommandTest.cpp
     src/BaseCommandFixture.cpp)
 
-set(CPPREST_INCLUDE /opt/cpprestsdk/Release/include)
-set(CPPREST_LIB_PATH /opt/cpprestsdk/Release/build.debug/Binaries)
+
 include_directories(${CPPREST_INCLUDE})
 
 
 include_directories(.)
 include_directories(src)
-include_directories(/opt/googletest/googletest/include)
+include_directories(${GTEST_INCLUDE})
 include_directories(${CPPREST_INCLUDE})
-include_directories(/home/cesare/Project/jarvis/CPLCore/src)
+include_directories(${CPLCORE_INCLUDE})
 
-link_directories(/opt/googletest/googletest)
-link_directories(/home/cesare/Desktop)
+link_directories(${GTEST_LIB_PATH})
+link_directories(${CPLCORE_LIB_PATH})
 link_directories(${CPPREST_LIB_PATH})
 
 add_executable(CPLCoreTest ${SOURCE_FILES})

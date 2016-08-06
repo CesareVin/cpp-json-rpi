@@ -12,8 +12,7 @@ set(SOURCE_FILES
     src/Server.cpp
     src/Server.h)
 
-set(CPPREST_INCLUDE /opt/cpprestsdk/Release/include)
-set(CPPREST_LIB_PATH /opt/cpprestsdk/Release/build.debug/Binaries)
+
 include_directories(${CPPREST_INCLUDE})
 link_directories(${CPPREST_LIB_PATH})
 
