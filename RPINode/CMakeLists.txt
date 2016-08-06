@@ -12,6 +12,9 @@ set(SOURCE_FILES
     src/RPINode.h)
 
 
+# The version number.
+set (Tutorial_VERSION_MAJOR 1)
+set (Tutorial_VERSION_MINOR 0)
 
 include_directories(.)
 include_directories(src)

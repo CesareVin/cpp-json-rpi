@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.8.4)
+
 project(CPLCoreTest)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -7,6 +8,11 @@ set(SOURCE_FILES
     src/CPLCoreTest.cpp
     src/BaseCommandTest.cpp
     src/BaseCommandFixture.cpp)
+
+
+# The version number.
+set (Tutorial_VERSION_MAJOR 1)
+set (Tutorial_VERSION_MINOR 0)
 
 
 include_directories(${CPPREST_INCLUDE})
