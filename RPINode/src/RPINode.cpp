@@ -20,3 +20,8 @@ RPINode::~RPINode() {
 
 }
 
+http_response RPINode::dispatchRequest(http_request request)
+{
+    return 0;
+}
+
