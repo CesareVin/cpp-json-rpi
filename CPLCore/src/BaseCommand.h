@@ -12,24 +12,12 @@
 #include<vector>
 #include<map>
 
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+#include <iostream>
 
-#ifdef _WIN32
-#define NOMINMAX
-#include <Windows.h>
-#else
-# include <sys/time.h>
-#endif
-#include "cpprest/json.h"
-#include "cpprest/http_listener.h"
-#include "cpprest/uri.h"
-#include "cpprest/asyncrt_utils.h"
 
-using namespace std;
-using namespace web;
-using namespace utility;
-using namespace http;
-using namespace web::http::experimental::listener;
-
+using namespace rapidjson;
 using namespace std;
 
 typedef std::map<std::string, std::string> TCommandSchema;
@@ -53,7 +41,7 @@ public:
 	void setRequestSchema(TCommandSchema schema);
 	map<string,string> getRequestSchema();
 
-	virtual web::json::value AsJSON();
+	virtual string AsJSON();
 
 protected:
 

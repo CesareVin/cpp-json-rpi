@@ -84,21 +84,34 @@ map<string,string> BaseCommand::getRequestSchema()
     * get the JSON representation of this cmmand
     * @return web::json::value the json
     */
-web::json::value BaseCommand::AsJSON()
+string BaseCommand::AsJSON()
 {
-	web::json::value res = web::json::value::object();
-	res[U("name")] = web::json::value::string(m_name);
+    
+             
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
 
-	web::json::value jSchema = web::json::value::array(m_requestSchema.size());
+        writer.StartObject();
+        
+        writer.Key("name");
+        writer.String(m_name.c_str(), static_cast<SizeType>(m_name.length()));
+        writer.Key("device");
+        writer.String(m_device.c_str());
+        //writer.String(m_name);
 
-	int idx = 0;
-	for (auto iter = m_requestSchema.begin(); iter != m_requestSchema.end(); ++iter)
-	{
-		web::json::value jSchemaEntity = web::json::value::object();
-		jSchemaEntity[U(iter->first)] = web::json::value::string(iter->second);
-		jSchema[idx++] = jSchemaEntity;
-	}
-	res["RequestSchema"] = jSchema;
-	return res;
+        writer.Key("RequestSchema");
+
+        writer.StartArray();
+        for (auto iter = m_requestSchema.begin(); iter != m_requestSchema.end(); ++iter)
+        {
+            writer.StartObject();
+            writer.Key(iter->first.c_str(),static_cast<SizeType>(iter->first.length()));
+            writer.String(iter->second.c_str());
+            writer.EndObject();
+        }
+        writer.EndArray();
+
+        return s.GetString();
+  
 }
 
