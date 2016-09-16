@@ -11,37 +11,42 @@
 
 #include <string>
 #include <vector>
-#include <sys/time.h>
 
-#include "cpprest/json.h"
-#include "cpprest/http_listener.h"
-#include "cpprest/uri.h"
-#include "cpprest/asyncrt_utils.h"
 #include "NodeBase.h"
+#include "http.h"
+#include "router.h"
+#include "endpoint.h"
+#include <algorithm>
+
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+
+#include <iostream>
 
 using namespace std;
-using namespace web;
-using namespace utility;
-using namespace http;
-using namespace web::http::experimental::listener;
+using namespace Net;
+using namespace Net::Rest;
+
 
 class Server {
 public:
-	Server(utility::string_t url,NodeBase*node);
+	Server(Net::Address addr,std::string url,NodeBase*node);
 	virtual ~Server();
 
-	pplx::task<void> open();
-	pplx::task<void> close();
+	void open();
+	void close();
 
 private:
-	void handle_get(http_request message);
-	void handle_put(http_request message);
-	void handle_post(http_request message);
-	void handle_delete(http_request message);
+	void handle_get(const Rest::Request& request, Net::Http::ResponseWriter response);
+	//void handle_put(http_request message);
+	//void handle_post(http_request message);
+	//void handle_delete(http_request message);
 
-	http_listener m_listener;
+	//http_listener m_listener;
 	NodeBase* m_Node;
-
+	std::shared_ptr<Net::Http::Endpoint> httpEndpoint;
+    Rest::Router router;
 };
 
 #endif /* SERVER_H_ */

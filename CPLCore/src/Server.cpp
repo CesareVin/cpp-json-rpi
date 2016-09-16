@@ -7,29 +7,49 @@
 
 #include "Server.h"
 
-Server::Server(utility::string_t url,NodeBase* node):m_listener(url),m_Node(node)
+Server::Server(Net::Address addr,std::string url,NodeBase* node):m_Node(node),httpEndpoint(std::make_shared<Net::Http::Endpoint>(addr))
 {
-	m_listener.support(methods::GET, std::bind(&Server::handle_get, this, std::placeholders::_1));
-	m_listener.support(methods::PUT, std::bind(&Server::handle_put, this, std::placeholders::_1));
-	m_listener.support(methods::POST, std::bind(&Server::handle_post, this, std::placeholders::_1));
-	m_listener.support(methods::DEL, std::bind(&Server::handle_delete, this, std::placeholders::_1));
+	 int treadNum = 1;
+	 auto opts = Net::Http::Endpoint::options()
+            .threads(treadNum)
+            .flags(Net::Tcp::Options::InstallSignalHandler);
+        httpEndpoint->init(opts);
+		    
+       // Routes::Post(router, "/record/:name/:value?", Routes::bind(&Server::doRecordMetric, this));
+        Routes::Get(router, url, Routes::bind(&Server::handle_get, this));
+       // Routes::Get(router, "/ready", Routes::bind(&Server::handleReady));
+       // Routes::Get(router, "/auth", Routes::bind(&Server::doAuth, this));
+
 }
 
 Server::~Server() {
 	delete m_Node;
 }
-pplx::task<void> Server::open()
+void Server::open()
 {
-	return m_listener.open();
+	httpEndpoint->setHandler(router.handler());
+	httpEndpoint->serve();
 }
 
-pplx::task<void> Server::close()
+void Server::close()
 {
-	return m_listener.close();
+	httpEndpoint->shutdown();
 }
 
-void Server::handle_get(http_request message)
+void Server::handle_get(const Rest::Request& req, Net::Http::ResponseWriter resp)
 {
+
+	  if (req.resource() == "/commands") {
+            resp.timeoutAfter(std::chrono::seconds(2));
+      }
+      else if (req.resource() == "/static") {
+            if (req.method() == Net::Http::Method::Get) {
+                Net::Http::serveFile(resp, "README.md").then([](ssize_t bytes) {;
+                    std::cout << "Sent " << bytes << " bytes" << std::endl;
+                }, Async::NoExcept);
+            }
+        }
+	/*
 	 web::json::value res = web::json::value::object();
 	 ucout <<  message.to_string() << endl;
 	 ucout <<  message.body() << endl;
@@ -55,7 +75,10 @@ void Server::handle_get(http_request message)
 	 }
      message.reply(status_codes::OK, res);
      return;
+	 */
+	resp.send(Http::Code::Ok, "No Account");
 }
+/*
 void Server::handle_post(http_request message)
 {
 	ucout <<  message.to_string() << endl;
@@ -92,3 +115,5 @@ void Server::handle_delete(http_request message)
 		return;
 	}
 }
+
+*/
