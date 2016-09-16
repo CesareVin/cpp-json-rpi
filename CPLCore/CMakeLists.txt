@@ -16,11 +16,12 @@ set(SOURCE_FILES
     src/NodeBase.h
     src/Server.cpp
     src/Server.h)
-
-
-include_directories(${CPPREST_INCLUDE})
-link_directories(${CPPREST_LIB_PATH})
+    
+include_directories(.)
+include_directories(${PISTACHE_INCLUDE})
+include_directories(${RAPID_JSON_INCLUDE})
+link_directories(${PISTACHE_LIB_PATH})
 
 add_library(CPLCore ${SOURCE_FILES})
 
-target_link_libraries(CPLCore boost_system crypto ssl cpprest)
+target_link_libraries(CPLCore net_static pthread)
