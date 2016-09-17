@@ -11,6 +11,11 @@
 #include <DeviceBase.h>
 #include <string>
 #include "BaseCommand.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
 
 
 class MotorDevice: public DeviceBase {
