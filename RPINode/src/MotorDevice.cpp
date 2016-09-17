@@ -8,6 +8,7 @@
 #include "MotorDevice.h"
 
 
+
 MotorDevice::MotorDevice(string name):DeviceBase() {
 
 	m_name = name;
