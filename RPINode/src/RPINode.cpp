@@ -20,8 +20,8 @@ RPINode::~RPINode() {
 
 }
 
-http_response RPINode::dispatchRequest(http_request request)
+string RPINode::dispatchRequest(const Net::Rest::Request& request)
 {
-    return 0;
+    return "";
 }
 

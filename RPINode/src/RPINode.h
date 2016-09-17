@@ -14,19 +14,13 @@
 #include<string>
 #include<vector>
 #include <sys/time.h>
+#include "router.h"
 
-#include "cpprest/json.h"
-#include "cpprest/http_listener.h"
-#include "cpprest/uri.h"
-#include "cpprest/asyncrt_utils.h"
 #include "NodeBase.h"
 #include "DeviceBase.h"
 
 using namespace std;
-using namespace web;
-using namespace utility;
-using namespace http;
-using namespace web::http::experimental::listener;
+
 
 #define MOTOR_L_A_PIN	"53"
 #define MOTOR_L_A_NAME	"pioB21"
@@ -41,7 +35,7 @@ class RPINode : public NodeBase {
 public:
 	RPINode();
 	virtual ~RPINode();
-	virtual http_response dispatchRequest(http_request request);
+	virtual string dispatchRequest(const Net::Rest::Request& request);
 
 private:
 	MotorDevice* m_leftMotor;

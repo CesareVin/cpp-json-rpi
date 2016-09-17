@@ -18,12 +18,14 @@ set (Tutorial_VERSION_MINOR 0)
 
 include_directories(.)
 include_directories(src)
-include_directories(${CPPREST_INCLUDE})
-include_directories(${CPLCORE_INCLUDE})
 
-link_directories(${CPPREST_LIB_PATH})
+include_directories(${CPLCORE_INCLUDE})
+include_directories(${PISTACHE_INCLUDE})
+include_directories(${RAPID_JSON_INCLUDE})
+
+link_directories(${PISTACHE_LIB_PATH})
 link_directories(${CPLCORE_LIB_PATH})
 
 add_executable(RPINode ${SOURCE_FILES})
 
-target_link_libraries(RPINode CPLCore boost_system crypto ssl cpprest)
+target_link_libraries(RPINode CPLCore net_static pthread)
