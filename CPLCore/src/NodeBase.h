@@ -12,6 +12,7 @@
 #include<vector>
 
 #include "http.h"
+#include "router.h"
 
 #include "NodeBase.h"
 #include "DeviceBase.h"
