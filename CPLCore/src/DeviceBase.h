@@ -11,7 +11,10 @@
 #include <string>
 #include <vector>
 #include "BaseCommand.h"
+#include "http.h"
+#include "router.h"
 
+using namespace Net;
 using namespace std;
 
 class DeviceBase
@@ -68,6 +71,11 @@ public:
 	{
 		m_Commands.push_back(command);
 	}
+
+	virtual void dispatchCommand(BaseCommand& command,Net::Http::ResponseWriter response)=0;
+
+
+
 
 protected:
 	string m_name;

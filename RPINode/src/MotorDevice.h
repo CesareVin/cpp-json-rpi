@@ -29,6 +29,8 @@ public:
 	bool TurnLeft();
 	bool TurnRight();
 
+	void dispatchCommand(BaseCommand& command,Net::Http::ResponseWriter response);
+
 
 private:
 	bool OpenGpio();

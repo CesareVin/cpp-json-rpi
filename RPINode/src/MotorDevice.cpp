@@ -113,3 +113,8 @@ bool MotorDevice::TurnRight()
 {
 	return false;
 }
+void MotorDevice::dispatchCommand(BaseCommand& command,Net::Http::ResponseWriter response)
+{
+
+}
+

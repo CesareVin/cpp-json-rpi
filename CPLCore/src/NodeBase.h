@@ -13,16 +13,23 @@
 
 #include "http.h"
 #include "router.h"
+#include "endpoint.h"
+#include <algorithm>
 
 #include "NodeBase.h"
 #include "DeviceBase.h"
 
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+
 using namespace std;
+using namespace Net;
 using namespace Net::Rest;
 
-
-class NodeBase
+class NodeBase : public Net::Http::Handler
 {
+HTTP_PROTOTYPE(NodeBase)
 public:
 	explicit NodeBase();
 	explicit NodeBase(vector<DeviceBase*> devices);
@@ -32,11 +39,19 @@ public:
 	vector<DeviceBase*> getDevices();
 	void addDevice(DeviceBase* device);
 	DeviceBase* removeDevice(int id);
-	virtual string dispatchRequest(const Net::Rest::Request& request)=0;
+	//virtual string dispatchRequest(const Net::Rest::Request& request);
 
+	void init(Net::Address addr);
+	void open();
+	void close();
+
+protected:
+	Rest::Router router;
+	void onRequest(const Net::Http::Request& req,Net::Http::ResponseWriter response);
 private:
 	string m_name;
 	vector<DeviceBase*> m_Devices;
+	std::shared_ptr<Net::Http::Endpoint> httpEndpoint;
 };
 
 

@@ -35,7 +35,6 @@ class RPINode : public NodeBase {
 public:
 	RPINode();
 	virtual ~RPINode();
-	virtual string dispatchRequest(const Net::Rest::Request& request);
 
 private:
 	MotorDevice* m_leftMotor;
