@@ -13,9 +13,7 @@ set(SOURCE_FILES
     src/BaseCommand.h
     src/DeviceBase.h
     src/NodeBase.cpp
-    src/NodeBase.h
-    src/Server.cpp
-    src/Server.h)
+    src/NodeBase.h)
     
 include_directories(.)
 include_directories(${PISTACHE_INCLUDE})

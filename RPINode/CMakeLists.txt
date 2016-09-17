@@ -4,7 +4,6 @@ project(RPINode)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-    src/common.h
     src/main.cpp
     src/MotorDevice.cpp
     src/MotorDevice.h
