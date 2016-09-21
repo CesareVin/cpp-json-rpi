@@ -72,7 +72,7 @@ public:
 		m_Commands.push_back(command);
 	}
 
-	virtual void dispatchCommand(BaseCommand& command,Net::Http::ResponseWriter response)=0;
+	virtual bool dispatchCommand(BaseCommand command,Net::Http::ResponseWriter response)=0;
 
 
 
