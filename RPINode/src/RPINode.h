@@ -37,8 +37,7 @@ public:
 	virtual ~RPINode();
 
 private:
-	MotorDevice* m_leftMotor;
-	MotorDevice* m_rightMotor;
+	MotorDevice* m_Motor;
 };
 
 #endif /* RPINODE_H_ */
