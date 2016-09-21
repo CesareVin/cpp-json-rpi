@@ -126,37 +126,78 @@ void NodeBase::onCommands(const Net::Http::Request& req,Net::Http::ResponseWrite
         Document d;
         //parse the request body
         d.Parse(req.body().c_str());
+        //check if command exist
+        if(!d.HasMember("command"))
+        {
+            cout<<"[ERR] command is missing"<<endl;
+            response.send(Net::Http::Code::Forbidden, "command not present");
+            return;
+        }
         //get the command from the JSON
         Value& cmd = d["command"];
+        //check if command is a string
+        if(!cmd.IsString())
+        {
+            cout<<"[ERR] command type can't match"<<endl;
+            response.send(Net::Http::Code::Forbidden, "command type can't match");
+            return;
+        }
 
         cout<<"[INFO] Command :"<<cmd.GetString()<<endl;
-        const Value& par = d["parameters"];
+        //check if parameters exist
+        if(!d.HasMember("parameters"))
+        {
+            cout<<"[ERR] parameters is missing"<<endl;
+            response.send(Net::Http::Code::Forbidden, "parameters not present");
+            return;
+        }
 
+        const Value& par = d["parameters"];
+        //check if parameters is an array
+        if(!par.IsArray())
+        {
+            cout<<"[ERR] parameters type can't match"<<endl;
+            response.send(Net::Http::Code::Forbidden, "parameters type can't match");
+            return;
+        }
+
+        //build the command
         BaseCommand comm;
         comm.setName(cmd.GetString());
 
-        //assert(par.IsArray());
+        //add parameters
         for (SizeType i = 0; i < par.Size(); i++) {
             comm.addParameter(par[i].GetString());
-            //printf("a[%d] = %s\n", i, par[i].GetString());
         }
 
+        if(d.HasMember("device"))
+        {
+            Value& devValue = d["command"];
+            if(devValue.IsString())
+                comm.setDevice(devValue.GetString());
+            else
+                cout<<"[ERR] device type can't match"<<endl;
+        }
+
+        bool isFound = false;
         for (int i = 0; i < m_Devices.size(); i++) {
             auto commands = m_Devices[i]->getCommands();
             for (int j = 0; j < commands.size(); j++) {
                 string command = cmd.GetString();
                 if(commands[j]->getName() == command)
                 {
+                    isFound = true;
                     cout<<"[INFO] Device :"<<m_Devices[i]->getName()<<endl;
-                    m_Devices[i]->dispatchCommand(comm,response);
+                    m_Devices[i]->dispatchCommand(comm,response.clone());
                 }
             }
 
         }
-
-        //delete s;
-        response.send(Net::Http::Code::Ok, "Ok");
-        cout<<"[INFO] Response sent "<<endl;
+        if(!isFound)
+        {
+            cout<<"[INFO] command is not supported "<<endl;
+            response.send(Net::Http::Code::Forbidden, "command not supported");
+        }
 
     }
 }
