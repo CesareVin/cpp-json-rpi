@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Robot</title>
+<script src="jQuery.js"></script>
+  <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="robot.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="./bootstrap/js/bootstrap.min.js"></script>
+  <script src="script_min.js"></script>
+
+</head>
+<body >
+  <div class="container">
+   <h1 class="text-center">Robot Control</h1>
+   <div class="row">  
+    <div class="col-md-12">  
+     <div class="panel panel-default panel-primary">
+       <div class="panel-heading"></div>
+       <div class="panel-body">
+         <div class="row">
+            <div class="col-md-12">
+              <div><img class="img-rounded" width="100%" height="100%" id="mjpeg_dest"></div>  
+            </div>
+             <br/>
+             <div class="col-md-6">   
+             
+              <button type="button" id="btnL" class="btn btn-default">
+                <span class="glyphicon glyphicon-menu-left" />
+              </button>
+              <button type="button" id="btnR" class="btn btn-default">
+                <span class="glyphicon glyphicon-menu-right" />
+              </button>
+              <button type="button" id="btnB" class="btn btn-default">
+                <span class="glyphicon glyphicon-menu-down" />
+              </button>
+              <button type="button" id="btnO" class="btn btn-default">
+                <span class="glyphicon glyphicon-menu-up" />
+              </button>
+	 			<button type="button" id="btnDistance" class="btn btn-default">
+               		check distance
+              </button>
+              <button type="button" id="btnS" class="btn btn-danger">Stop</button>
+            </div>   
+            <div class="col-md-6">   
+                <p id="distance"> Obstacol at 42,3 cm </p>
+            </div>   
+ <div class="col-md-6">
+                <input id="pwm" type="range" min="0" max="100" />
+            </div>
+         </div>
+       </div>
+     </div>  
+   </div>
+</div>  
+</div>
+</body>
+</html>
