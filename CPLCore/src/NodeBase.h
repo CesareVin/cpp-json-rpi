@@ -27,9 +27,11 @@ using namespace std;
 using namespace Net;
 using namespace Net::Rest;
 
-class NodeBase : public Net::Http::Handler
+using namespace rapidjson;
+
+class NodeBase
 {
-HTTP_PROTOTYPE(NodeBase)
+
 public:
 	explicit NodeBase();
 	explicit NodeBase(vector<DeviceBase*> devices);
@@ -39,7 +41,6 @@ public:
 	vector<DeviceBase*> getDevices();
 	void addDevice(DeviceBase* device);
 	DeviceBase* removeDevice(int id);
-	//virtual string dispatchRequest(const Net::Rest::Request& request);
 
 	void init(Net::Address addr);
 	void open();
@@ -47,7 +48,9 @@ public:
 
 protected:
 	Rest::Router router;
-	void onRequest(const Net::Http::Request& req,Net::Http::ResponseWriter response);
+	//void onRequest(const Net::Http::Request& req,Net::Http::ResponseWriter response);
+	void onCommands(const Net::Http::Request& req,Net::Http::ResponseWriter response);
+	void onIndex(const Net::Http::Request& req,Net::Http::ResponseWriter response);
 private:
 	string m_name;
 	vector<DeviceBase*> m_Devices;
