@@ -45,6 +45,8 @@ public:
 
 	void addParameter(string value);
 
+	bool operator==(const BaseCommand *rhs);
+
 protected:
 
 	string m_name;

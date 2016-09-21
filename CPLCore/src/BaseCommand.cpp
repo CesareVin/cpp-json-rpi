@@ -85,3 +85,10 @@ void BaseCommand::addParameter(string value)
 	m_parameters.push_back(value);
 }
 
+bool BaseCommand::operator==(const BaseCommand *rhs)
+{
+	if(this->m_name == rhs->m_name)
+		return true;
+	return false;
+}
+
