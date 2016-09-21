@@ -21,7 +21,8 @@ using namespace std;
 class MotorDevice: public DeviceBase {
 public:
 	MotorDevice(string name);
-	MotorDevice(string name,string pinA,string nameA,string pinB,string nameB);
+	MotorDevice(string name,string LpinA,string LnameA,string LpinB,string LnameB,
+				 string RpinA,string RnameA,string RpinB,string RnameB);
 	virtual ~MotorDevice();
 
 	bool GoOn();
@@ -29,19 +30,26 @@ public:
 	bool TurnLeft();
 	bool TurnRight();
 
-	void dispatchCommand(BaseCommand& command,Net::Http::ResponseWriter response);
+	bool dispatchCommand(BaseCommand command,Net::Http::ResponseWriter response);
 
 
 private:
 	bool OpenGpio();
 	bool CloseGpio();
 	BaseCommand* motorOn;
+	BaseCommand* motorLeft;
+	BaseCommand* motorRight;
+	BaseCommand* motorBack;
 
-	string m_motorPinA;
-	string m_motorNameA;
+	string m_motorLPinA;
+	string m_motorLNameA;
+	string m_motorLPinB;
+	string m_motorLNameB;
 
-	string m_motorPinB;
-	string m_motorNameB;
+	string m_motorRPinA;
+	string m_motorRNameA;
+	string m_motorRPinB;
+	string m_motorRNameB;
 };
 
 #endif /* MOTORDEVICE_H_ */
