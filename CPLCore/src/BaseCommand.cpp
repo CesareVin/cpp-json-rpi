@@ -20,7 +20,8 @@ BaseCommand::BaseCommand()
     *        -schema  :  map<string,string> , dictionary that represent the request schema */
 BaseCommand::BaseCommand(string name,string device,map<string,string> schema):m_name(name),
 																			  m_device(device),
-																			  m_requestSchema(schema)
+																			  m_requestSchema(schema),
+																			  m_parameters()
 {
 
 }
@@ -79,39 +80,8 @@ map<string,string> BaseCommand::getRequestSchema()
 	return m_requestSchema;
 }
 
-/**
-    * AsJSON
-    * get the JSON representation of this cmmand
-    * @return web::json::value the json
-    */
-string BaseCommand::AsJSON()
+void BaseCommand::addParameter(string value)
 {
-    
-             
-    StringBuffer s;
-    Writer<StringBuffer> writer(s);
-
-        writer.StartObject();
-        
-        writer.Key("name");
-        writer.String(m_name.c_str(), static_cast<SizeType>(m_name.length()));
-        writer.Key("device");
-        writer.String(m_device.c_str());
-        //writer.String(m_name);
-
-        writer.Key("RequestSchema");
-
-        writer.StartArray();
-        for (auto iter = m_requestSchema.begin(); iter != m_requestSchema.end(); ++iter)
-        {
-            writer.StartObject();
-            writer.Key(iter->first.c_str(),static_cast<SizeType>(iter->first.length()));
-            writer.String(iter->second.c_str());
-            writer.EndObject();
-        }
-        writer.EndArray();
-
-        return s.GetString();
-  
+	m_parameters.push_back(value);
 }
 

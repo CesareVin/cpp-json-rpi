@@ -11,9 +11,11 @@
 #include<string>
 #include<vector>
 #include<map>
+#include<algorithm>
 
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include "rapidjson/prettywriter.h" // for stringify JSON
 #include <iostream>
 
 
@@ -22,7 +24,7 @@ using namespace std;
 
 typedef std::map<std::string, std::string> TCommandSchema;
 typedef std::pair<std::string, std::string> TCommandSchemaPair;
-typedef std::pair<string,string> TCommandParameter;
+typedef std::map<string,string> TCommandParameter;
 
 
 class BaseCommand
@@ -41,7 +43,7 @@ public:
 	void setRequestSchema(TCommandSchema schema);
 	map<string,string> getRequestSchema();
 
-	virtual string AsJSON();
+	void addParameter(string value);
 
 protected:
 
@@ -49,7 +51,7 @@ protected:
 	string m_device;
 	TCommandSchema m_requestSchema;
 	TCommandSchema m_responseSchema;
-	TCommandParameter m_parameters;
+	vector<string> m_parameters;
 };
 
 #endif /* BASECOMMAND_H_ */
