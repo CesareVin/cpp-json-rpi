@@ -10,6 +10,6 @@ set(CPLCORE_LIB_PATH /home/cesare/Project/jarvis/build/CPLCore)
 SET(GTEST_LIB_PATH /opt/googletest/googletest)
 set(PISTACHE_LIB_PATH /opt/pistache/build/src)
 
-subdirs(CPLCore CPLCoreTest RPINode)
+subdirs(CPLCore CPLCoreTest RPINode RPINodeTest)
 
 
