@@ -7,6 +7,8 @@ set(SOURCE_FILES
     src/main.cpp
     src/MotorDevice.cpp
     src/MotorDevice.h
+    src/CameraDevice.cpp
+    src/CameraDevice.h
     src/RPINode.cpp
     src/RPINode.h)
 

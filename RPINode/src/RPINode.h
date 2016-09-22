@@ -10,6 +10,7 @@
 
 #include "NodeBase.h"
 #include "MotorDevice.h"
+#include "CameraDevice.h"
 
 #include<string>
 #include<vector>
@@ -38,6 +39,7 @@ public:
 
 private:
 	MotorDevice* m_Motor;
+	CameraDevice* m_Camera;
 };
 
 #endif /* RPINODE_H_ */
