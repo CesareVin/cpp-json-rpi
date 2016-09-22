@@ -23,8 +23,3 @@ TEST(BaseCommand, Costructor) {
 
     delete b;
 }
-
-TEST(BaseCommand, asJSON) {
-
-
-}

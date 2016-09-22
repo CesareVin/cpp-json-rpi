@@ -20,10 +20,16 @@ using namespace std;
 class DeviceBase
 {
 public:
+	/**
+    * DeviceBase
+    * Default cnostructor*/
 	explicit DeviceBase(){};
 	explicit DeviceBase(string name,vector<BaseCommand*> commands):m_name(name),m_Commands(commands)
 	{
 	}
+	/**
+    * DeviceBase
+    * Default destructor*/
 	virtual ~DeviceBase(){
 
 		while (!this->m_Commands.empty()){
@@ -45,7 +51,7 @@ public:
 	/**
     * setName
     * set the name of the command
-    * @param -name    : string that rappresent the command name.
+    * @param -name    : string that represent the command name.
     */
 	void setName(string name)
 	{
@@ -53,8 +59,8 @@ public:
 	}
 
 	/**
-    * getName
-    * get the name of this command
+    * getCommands
+    * get all commands
     * @return vector<BaseCommand*> the commands vector
     */
 	vector<BaseCommand*> getCommands()
@@ -72,6 +78,13 @@ public:
 		m_Commands.push_back(command);
 	}
 
+	/**
+    * dispatchCommand
+    * Execute a command
+    * @param -command    : BaseCommand the command.
+    * @param -response   : ResponseWriter to build responce.
+    * @return bool determines if command is correctly executed
+    */
 	virtual bool dispatchCommand(BaseCommand command,Net::Http::ResponseWriter response)=0;
 
 

@@ -48,7 +48,7 @@ public:
 
 protected:
 	Rest::Router router;
-	//void onRequest(const Net::Http::Request& req,Net::Http::ResponseWriter response);
+
 	void onCommands(const Net::Http::Request& req,Net::Http::ResponseWriter response);
 	void onIndex(const Net::Http::Request& req,Net::Http::ResponseWriter response);
 private:

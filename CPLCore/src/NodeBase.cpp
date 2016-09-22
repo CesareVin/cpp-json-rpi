@@ -1,19 +1,29 @@
 
 #include "NodeBase.h"
 
+/**
+    * NodeBase
+    * Default costructor*/
 NodeBase::NodeBase()
 {
 
 }
 
+/**
+    * NodeBase
+    * Parametrized costructor
+    * @param -devices  : vector<DeviceBase*> , the devices associated with this Node
+    */
 NodeBase::NodeBase(vector<DeviceBase*> devices)
 {
 	this->m_Devices = devices;
 }
 
+/**
+    * NodeBase
+    * Default destructor*/
 NodeBase::~NodeBase()
 {
-	/*for (auto &dev : this->m_Devices)	{ }*/
 	while (!this->m_Devices.empty()){
 	    DeviceBase* dev =this->m_Devices.back();
 		m_Devices.pop_back();
@@ -21,22 +31,52 @@ NodeBase::~NodeBase()
 	}
 }
 
+/**
+    * getName
+    * get the name of this Node
+    * @return string the name
+    */
 string NodeBase::getName()
 {
 	return this->m_name;
 }
+
+/**
+    * setName
+    * set the name of the Node
+    * @param -name    : string that represent the Node name.
+    */
 void NodeBase::setName(string name)
 {
 	this->m_name = name;
 }
+
+/**
+    * setName
+    * set the name of the Node
+    * @return vector<DeviceBase*> the devices associated with this Node
+    */
 vector<DeviceBase*> NodeBase::getDevices()
 {
 	return this->m_Devices;
 }
+
+/**
+    * addDevice
+    * add a DeviceBase on this Node
+    * @param -device DeviceBase* the device to add on this node
+    */
 void NodeBase::addDevice(DeviceBase* device)
 {
 	this->m_Devices.push_back(device);
 }
+
+/**
+    * removeDevice
+    * remove a DeviceBase on this Node
+    * @param -id the id of the device to remove
+    * @return the removed DeviceBase
+    */
 DeviceBase* NodeBase::removeDevice(int id)
 {
 	DeviceBase* dev =this->m_Devices.back();
@@ -44,6 +84,12 @@ DeviceBase* NodeBase::removeDevice(int id)
 	return dev;
 }
 
+/**
+    * init
+    * It init the http middleware for this node.
+    * The network is build with a given address.
+    * @param -addr the Net::Address where the middleware is reachable
+    */
 void NodeBase::init(Net::Address addr)
 {
 	httpEndpoint = std::make_shared<Net::Http::Endpoint>(addr);
@@ -53,25 +99,36 @@ void NodeBase::init(Net::Address addr)
 			.flags(Net::Tcp::Options::InstallSignalHandler);
 	httpEndpoint->init(opts);
 
-	// Routes::Post(router, "/record/:name/:value?", Routes::bind(&Server::doRecordMetric, this));
 	Routes::Get(router, "api/v1/commands", Routes::bind(&NodeBase::onCommands, this));
     Routes::Get(router, "", Routes::bind(&NodeBase::onIndex, this));
     Routes::Put(router, "api/v1/commands",Routes::bind(&NodeBase::onCommands, this));
 }
 
+/**
+    * open
+    * It start the http middleware.
+    */
 void NodeBase::open()
 {
-
     httpEndpoint->setHandler(router.handler());
-	//httpEndpoint->setHandler(Http::make_handler<NodeBase>());
 	httpEndpoint->serve();
 }
 
+/**
+    * open
+    * It shutdown the http middleware.
+    */
 void NodeBase::close()
 {
 	httpEndpoint->shutdown();
 }
 
+/**
+    * onCommands
+    * the handler of the command REST endpoint
+    * @param -Request the Net::Http request
+    * @param -response the resposce writer to terminate the request
+    */
 void NodeBase::onCommands(const Net::Http::Request& req,Net::Http::ResponseWriter response)
 {
     if(req.method() ==  Net::Http::Method::Get) {
@@ -83,9 +140,6 @@ void NodeBase::onCommands(const Net::Http::Request& req,Net::Http::ResponseWrite
         writer.StartArray();
         for (int i = 0; i < m_Devices.size(); i++) {
             auto commands = m_Devices[i]->getCommands();
-            //writer.Key("name");
-            //writer.String(m_Devices[i]->getName().c_str());
-            //writer.Key("commands");
             writer.Key(m_Devices[i]->getName().c_str());
             writer.StartArray();
             for (int j = 0; j < commands.size(); j++) {
@@ -104,11 +158,6 @@ void NodeBase::onCommands(const Net::Http::Request& req,Net::Http::ResponseWrite
                     writer.EndObject();
                 }
                 writer.EndArray();
-
-
-                /*auto out = commands[j]->AsJSON();
-                out.erase (std::remove(out.begin(), out.end(), '\\'), out.end());
-                writer.String(out.c_str());*/
                 writer.EndObject();
             }
             writer.EndArray();
@@ -202,6 +251,12 @@ void NodeBase::onCommands(const Net::Http::Request& req,Net::Http::ResponseWrite
     }
 }
 
+/**
+    * onIndex
+    * the handler of the static index.html.
+    * @param -Request the Net::Http request
+    * @param -response the resposce writer to terminate the request
+    */
 void NodeBase::onIndex(const Net::Http::Request& req,Net::Http::ResponseWriter response)
 {
     Net::Http::serveFile(response, "index.html").then([](ssize_t bytes) {

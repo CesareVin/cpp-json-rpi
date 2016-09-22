@@ -8,9 +8,8 @@ protected:
     virtual void SetUp() {
     	b.setDevice("dev_test");
     	b.setName("name_test");
-    	TCommandSchema schema;// = {{"command1","int"},{"command2","string"}};
+    	TCommandSchema schema;
     	schema.insert(TCommandSchemaPair("command1","int"));
-    	//schema.insert("","");
     	b.setRequestSchema(schema);
     }
 

@@ -7,7 +7,12 @@
 
 #include "CameraDevice.h"
 
-
+/**
+    * CameraDevice
+    * Default costructor
+    * @param -name    : string that represent the device name.
+    * @param -imgPath : string that represent image path
+    * */
 CameraDevice::CameraDevice(string name,string imgPath):DeviceBase()
 {
 	m_imgPath = imgPath;
@@ -20,10 +25,20 @@ CameraDevice::CameraDevice(string name,string imgPath):DeviceBase()
 
 }
 
+/**
+    * CameraDevice
+    * Default destructor */
 CameraDevice::~CameraDevice() {
 
 }
 
+/**
+    * dispatchCommand
+    * Execute a command
+    * @param -command    : BaseCommand the command.
+    * @param -response   : ResponseWriter to build responce.
+    * @return bool determines if command is correctly executed
+    */
 bool CameraDevice::dispatchCommand(BaseCommand command,Net::Http::ResponseWriter response)
 {
 	if(command == m_getFrame)

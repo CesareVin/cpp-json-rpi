@@ -7,6 +7,9 @@
 
 #include "RPINode.h"
 
+/**
+    * DeviceBase
+    * Default constructor*/
 RPINode::RPINode():NodeBase() {
     this->setName("RpiNode");
 

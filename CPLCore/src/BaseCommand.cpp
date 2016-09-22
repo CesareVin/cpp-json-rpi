@@ -7,14 +7,16 @@
 
 #include "BaseCommand.h"
 
-
+/**
+    * BaseCommand
+    * Default costructor*/
 BaseCommand::BaseCommand()
 {
 
 }
 /**
     * BaseCommand
-    * Default costructor
+    * Parametrized costructor
     * @param -name    : string ,the command name.
     *        -device  : string , the device build this command.
     *        -schema  :  map<string,string> , dictionary that represent the request schema */
@@ -71,20 +73,41 @@ void BaseCommand::setDevice(string device)
 	m_device = device;
 }
 
+/**
+    * setRequestSchema
+    * set the schema for this command
+    * @param -schema    : TCommandSchema the command request schema.
+    */
 void BaseCommand::setRequestSchema(TCommandSchema schema)
 {
 	m_requestSchema = schema;
 }
+
+/**
+    * getRequestSchema
+    * get the schema for this command
+    * @return map<string,string> the command request schema.
+    */
 map<string,string> BaseCommand::getRequestSchema()
 {
 	return m_requestSchema;
 }
 
+/**
+    * addParameter
+    * add a parameter on the command
+    * @param -value string the parameter to add.
+    */
 void BaseCommand::addParameter(string value)
 {
 	m_parameters.push_back(value);
 }
 
+/**
+    * operator==
+    * the equality compare command
+    * @param -rhs the BaseCommand* to compare
+    */
 bool BaseCommand::operator==(const BaseCommand *rhs)
 {
 	if(this->m_name == rhs->m_name)
