@@ -15,19 +15,14 @@ set (Tutorial_VERSION_MAJOR 1)
 set (Tutorial_VERSION_MINOR 0)
 
 
-include_directories(${CPPREST_INCLUDE})
-
-
 include_directories(.)
 include_directories(src)
 include_directories(${GTEST_INCLUDE})
-include_directories(${CPPREST_INCLUDE})
 include_directories(${CPLCORE_INCLUDE})
 
 link_directories(${GTEST_LIB_PATH})
 link_directories(${CPLCORE_LIB_PATH})
-link_directories(${CPPREST_LIB_PATH})
 
 add_executable(CPLCoreTest ${SOURCE_FILES})
 
-target_link_libraries(CPLCoreTest CPLCore boost_system crypto ssl cpprest gtest_main gtest pthread )
+target_link_libraries(CPLCoreTest CPLCore gtest_main gtest pthread )
